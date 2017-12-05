@@ -1,10 +1,7 @@
 import TelegramBot from 'node-telegram-bot-api';
 import Message from './message';
 import config from '../config';
-import InputParser from './inputParser';
 import handlers from '../handlers';
-
-const inputParser = new InputParser();
 
 export default class Messenger {
 
@@ -22,9 +19,8 @@ export default class Messenger {
     return Promise.resolve();
   }
 
-  handleText(msg) {
-    //format the message
-    const message = new Message(Message.mapMessage(msg));
+  handleText(messageFromBot) {    
+    const message = new Message(messageFromBot);
 
     return handlers.Command.processCommand(this.bot, message);
   }

@@ -1,18 +1,19 @@
 export default class Message {
     
-  constructor(msg) {
-    this.from = msg.from
-    this.text = msg.text
-    this.user = msg.user
+  constructor(messageFromBot) {
+    var message = this.mapMessage(messageFromBot);
+    this.from = message.from
+    this.text = message.text
+    this.user = message.user
   }
 
-  static mapMessage(msg) {
+  static mapMessage(messageFromBot) {
     return {
-      from: msg.from.id,
-      text: msg.text,
+      from: messageFromBot.from.id,
+      text: messageFromBot.text,
       user: {
-        firstName: msg.from.first_name,
-        lastName: msg.from.last_name
+        firstName: messageFromBot.from.first_name,
+        lastName: messageFromBot.from.last_name
       }
     }
   }

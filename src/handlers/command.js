@@ -6,7 +6,7 @@ const progress = new Progress();
 
 export default class Command {
   constructor() {
-    this.commandObject = {
+    this.commandMapping = {
       progress: {
         string: "/progress",
         function: this.getProgress,
@@ -23,19 +23,19 @@ export default class Command {
   }
 
   processCommand(bot, message){
-    var commandString = mapCommand(message);
+    var commandString = this.mapToCommand(message);
     if (commandString) {
-      return this.commandObject[commandString].function(bot, message);
+      return this.commandMapping[commandString].function(bot, message);
     } else {
-      return this.commandObject["default"].function(bot, message);
+      return this.commandMapping["default"].function(bot, message);
     }
   }
 
-  mapCommand(message){
-    var commandString = this.commandObject;
+  mapToCommand(message){
+    var commandMapping = this.commandMapping;
     var arrayText = message.text.split(" ");
-    for (var key in commandString) {
-      if (arrayText[0] && arrayText[0].match(commandString[key])) {
+    for (var key in commandMapping) {
+      if (arrayText[0] && arrayText[0].match(commandMapping[key])) {
         return key;
       }
     }
