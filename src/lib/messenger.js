@@ -14,7 +14,7 @@ export default class Messenger {
     }
   }
 
-  listen() {
+  Listen() {
     this.bot.on('text', this.handleText.bind(this));
     return Promise.resolve();
   }
@@ -22,6 +22,6 @@ export default class Messenger {
   handleText(messageFromBot) {    
     const message = new Message(messageFromBot);
 
-    return handlers.Command.processCommand(this.bot, message);
+    return handlers.Command.ProcessCommand(this.bot, message);
   }
 }

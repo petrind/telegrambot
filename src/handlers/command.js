@@ -22,7 +22,7 @@ export default class Command {
     }
   }
 
-  processCommand(bot, message){
+  ProcessCommand(bot, message){
     var commandString = this.mapToCommand(message);
     if (commandString) {
       return this.commandMapping[commandString].function(bot, message);
