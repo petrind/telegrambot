@@ -1,5 +1,5 @@
 import Command from './command';
 
 export default {
-  command: new Command
+  Command: new Command
 }

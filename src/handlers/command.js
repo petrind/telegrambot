@@ -5,13 +5,50 @@ const time = new Time();
 const progress = new Progress();
 
 export default class Command {
-  constructor() {}
+  constructor() {
+    this.commandObject = {
+      progress: {
+        string: "/progress",
+        function: this.getProgress,
+      },
+      start: {
+        string: "/start",
+        function: this.getGreeting,
+      },
+      default: {
+        string: "/help",
+        function: this.getHelp,
+      },
+    }
+  }
 
-  getGreeting(message, bot) {
+  processCommand(bot, message){
+    var commandString = mapCommand(message);
+    if (commandString) {
+      return this.commandObject[commandString].function(bot, message);
+    } else {
+      return this.commandObject["default"].function(bot, message);
+    }
+  }
+
+  mapCommand(message){
+    var commandString = this.commandObject;
+    var arrayText = message.text.split(" ");
+    for (var key in commandString) {
+      if (arrayText[0] && arrayText[0].match(commandString[key])) {
+        return key;
+      }
+    }
+    return null;
+  }
+  
+  //region function command
+
+  getGreeting(bot, message) {
     bot.sendMessage(message.from, 'Hi, there! It is nice to see you here, ${message.user.firstName} !');
   }
 
-  getProgress(message, bot) {
+  getProgress(bot, message) {
     const yearPercents = time.getYearProgress();
     const yearProgress = progress.makeProgressString(yearPercents);
 
@@ -29,8 +66,8 @@ export default class Command {
     bot.sendMessage(message.from, text);
   }
 
-  getHelp(message, bot) {
+  getHelp(bot, message) {
     bot.sendMessage(message.from, 'Call the /progress to see how much time you waste');
   }
-
+  //endregion
 }
