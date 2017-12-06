@@ -6,36 +6,55 @@ const progress = new Progress();
 
 export default class Command {
   constructor() {
-    this.commandMap = {
-      progress: {
-        string: "/progress",
-        function: this.getProgress,
-      },
+  }
+
+  commandMap() {
+    var commandMap = {      
       start: {
         string: "/start",
-        function: this.getGreeting,
+        function: self.getGreeting,
+        description: "/start to start the bot",
+      },
+      supportedVersion: {
+        string: "/supportedversion",
+        function: self.getSupportedVersion,
+        description: "/supportedversion <name of application> " 
+          + " to know newest version and which version is supported"
+          + "%\n example: /supportedversion <chrome> ",
+      },
+      isSupportedVersion: {
+        string: "/issupportedversion",
+        function: self.getIsSupportedVersion,
+        description: "/issupportedversion <name of application> <version>" 
+          + " to know if the version is supported"
+          + "%\n example: /issupportedversion <chrome> <1543>",
       },
       default: {
         string: "/help",
-        function: this.getHelp,
+        function: self.getHelp,
+        description: "/help" 
+          + " to know the command supported in this bot"
+          + "%\n example: /help",
       },
     }
+    return commandMap;
   }
 
   ProcessCommand(bot, message){
-    var commandString = this.mapToCommand(message);
+    var commandMap = self.commandMap();
+    var commandString = self.mapToCommand(message);    
     if (commandString) {
-      return this.commandMap[commandString].function(bot, message);
+      return commandMap[commandString].function(bot, message);
     } else {
-      return this.commandMap["default"].function(bot, message);
+      return commandMap["default"].function(bot, message);
     }
   }
 
   mapToCommand(message){
-    var commandMap = this.commandMap;
-    var arrayText = message.text.split(" ");
+    var commandMap = self.commandMap();    
+    var arrayText = message.text.split(" ");    
     for (var key in commandMap) {
-      if (arrayText[0] && arrayText[0].match(commandMap[key])) {
+      if (arrayText[0] && arrayText[0].match(commandMap[key].string)) {
         return key;
       }
     }
@@ -44,8 +63,16 @@ export default class Command {
   
   //region function command
 
+  getSupportedVersion(bot, message) {
+    bot.sendMessage(message.from, 'Unimplmented function !');
+  }
+
+  getIsSupportedVersion(bot, message) {
+    bot.sendMessage(message.from, 'Unimplmented function !');
+  }
+
   getGreeting(bot, message) {
-    bot.sendMessage(message.from, 'Hi, there! It is nice to see you here, ${message.user.firstName} !');
+    bot.sendMessage(message.from, 'Hi, there! It is nice to see you here!');
   }
 
   getProgress(bot, message) {
@@ -67,7 +94,13 @@ export default class Command {
   }
 
   getHelp(bot, message) {
-    bot.sendMessage(message.from, 'Call the /progress to see how much time you waste');
+    var commandMap = self.commandMap();
+    var text = "";
+    for (var key in commandMap) {
+      text += commandMap[key].description + "\n\n";
+    }
+    bot.sendMessage(message.from, text);
   }
   //endregion
 }
+const self = new Command();

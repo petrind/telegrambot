@@ -1,5 +1,5 @@
 export default class Message {
-    
+  
   constructor(messageFromBot) {
     var message = this.mapMessage(messageFromBot);
     this.from = message.from
@@ -7,7 +7,7 @@ export default class Message {
     this.user = message.user
   }
 
-  static mapMessage(messageFromBot) {
+  mapMessage(messageFromBot) {
     return {
       from: messageFromBot.from.id,
       text: messageFromBot.text,
