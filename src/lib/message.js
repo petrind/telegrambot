@@ -7,7 +7,7 @@ export default class Message {
     this.user = message.user
   }
 
-  mapMessage(messageFromBot) {
+  mapMessage(messageFromBot) {    
     return {
       from: messageFromBot.from.id,
       text: messageFromBot.text,

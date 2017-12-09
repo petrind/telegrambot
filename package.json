@@ -9,6 +9,8 @@
     "serve": "nodemon dist/index.js"
   },
   "dependencies": {
+    "bluebird": "^3.5.1",
+    "mongodb": "^2.2.33",
     "node-telegram-bot-api": "^0.21.1"
   },
   "devDependencies": {

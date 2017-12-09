@@ -1,11 +1,13 @@
 import Time from "../services/time";
 import Progress from "../services/progress";
+import AppVersion from "../services/appVersion";
+import Promise from "bluebird";
 
 const time = new Time();
 const progress = new Progress();
 
 export default class Command {
-  constructor() {
+  constructor() {    
   }
 
   commandMap() {
@@ -14,6 +16,7 @@ export default class Command {
         string: "/start",
         function: self.getGreeting,
         description: "/start to start the bot",
+        textInput: 0,
       },
       supportedVersion: {
         string: "/supportedversion",
@@ -21,6 +24,7 @@ export default class Command {
         description: "/supportedversion <name of application> " 
           + " to know newest version and which version is supported"
           + "%\n example: /supportedversion <chrome> ",
+        textInput: 1,
       },
       isSupportedVersion: {
         string: "/issupportedversion",
@@ -28,6 +32,7 @@ export default class Command {
         description: "/issupportedversion <name of application> <version>" 
           + " to know if the version is supported"
           + "%\n example: /issupportedversion <chrome> <1543>",
+          textInput: 2,
       },
       default: {
         string: "/help",
@@ -35,6 +40,7 @@ export default class Command {
         description: "/help" 
           + " to know the command supported in this bot"
           + "%\n example: /help",
+          textInput: 0,
       },
     }
     return commandMap;
@@ -44,13 +50,15 @@ export default class Command {
     var commandMap = self.commandMap();
     var commandString = self.mapToCommand(message);    
     if (commandString) {
+      self.putMessageWithoutCommand(message, commandString);
+      console.log(message);
       return commandMap[commandString].function(bot, message);
     } else {
       return commandMap["default"].function(bot, message);
     }
   }
 
-  mapToCommand(message){
+  mapToCommand(message) {
     var commandMap = self.commandMap();    
     var arrayText = message.text.split(" ");    
     for (var key in commandMap) {
@@ -60,15 +68,35 @@ export default class Command {
     }
     return null;
   }
+
+  putMessageWithoutCommand(message, commandString) {
+    var commandMap = self.commandMap();
+    if(message && message.text) {
+      var textWithoutCommand = message.text.replace(commandMap[commandString].string, "").trim();
+      var arrayText = textWithoutCommand.replace(">", "").split("<");
+      arrayText.forEach(element => {
+        element = element.trim();
+      });
+    }
+    message.arrayText = arrayText;
+  }
   
   //region function command
 
   getSupportedVersion(bot, message) {
-    bot.sendMessage(message.from, 'Unimplmented function !');
+    return Promise.try(function () {      
+      return AppVersion.findApplication(message.arrayText[0]);
+    })
+    .then(function(result) {
+      bot.sendMessage(message.from, result);
+    })
   }
 
   getIsSupportedVersion(bot, message) {
-    bot.sendMessage(message.from, 'Unimplmented function !');
+    if (message.arrayText.length != 2) {
+      bot.sendMessage(message.from, 'Not enough text!');  
+    }
+    bot.sendMessage(message.from, 'Unimplemented function !');
   }
 
   getGreeting(bot, message) {

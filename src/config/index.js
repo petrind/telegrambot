@@ -4,6 +4,9 @@ export default {
       externalUrl: process.env.CUSTOM_ENV_VARIABLE || 'https://yoursite.com',
       port: process.env.PORT || 443,
       host: '0.0.0.0'
+    },
+    mongodb: {
+      url: process.env.MONGODBURL || 'mongodb://localhost:27017/appversion',
     }
   };
   
