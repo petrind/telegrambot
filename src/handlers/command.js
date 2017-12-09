@@ -50,8 +50,7 @@ export default class Command {
     var commandMap = self.commandMap();
     var commandString = self.mapToCommand(message);    
     if (commandString) {
-      self.putMessageWithoutCommand(message, commandString);
-      console.log(message);
+      self.putMessageWithoutCommand(message, commandString);      
       return commandMap[commandString].function(bot, message);
     } else {
       return commandMap["default"].function(bot, message);
@@ -84,6 +83,9 @@ export default class Command {
   //region function command
 
   getSupportedVersion(bot, message) {
+    if (message.arrayText.length != 1) {
+      bot.sendMessage(message.from, 'Not enough text!');  
+    }
     return Promise.try(function () {      
       return AppVersion.findApplication(message.arrayText[0]);
     })
@@ -101,24 +103,6 @@ export default class Command {
 
   getGreeting(bot, message) {
     bot.sendMessage(message.from, 'Hi, there! It is nice to see you here!');
-  }
-
-  getProgress(bot, message) {
-    const yearPercents = time.getYearProgress();
-    const yearProgress = progress.makeProgressString(yearPercents);
-
-    const monthPercents = time.getMonthProgress();
-    const monthProgress = progress.makeProgressString(monthPercents);
-
-    const dayPercents = time.getDayProgress();
-    const dayProgress = progress.makeProgressString(dayPercents);
-
-    const text =
-      "Year:    " + yearProgress + " " + yearPercents + "%\n" +
-      "Month: " + monthProgress + " " + monthPercents + "%\n" +
-      "Day:     " + dayProgress + " " + dayPercents + "%\n";
-
-    bot.sendMessage(message.from, text);
   }
 
   getHelp(bot, message) {
