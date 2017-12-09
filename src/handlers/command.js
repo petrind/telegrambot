@@ -39,6 +39,7 @@ export default class Command {
   }
 
   ProcessCommand(bot, message){
+    console.log("get message")
     var commandMap = self.commandMap();
     var commandString = self.mapToCommand(message);    
     if (commandString) {
