@@ -25,15 +25,7 @@ export default class Command {
           + " to know newest version and which version is supported"
           + "%\n example: /supportedversion <chrome> ",
         textInput: 1,
-      },
-      isSupportedVersion: {
-        string: "/issupportedversion",
-        function: self.getIsSupportedVersion,
-        description: "/issupportedversion <name of application> <version>" 
-          + " to know if the version is supported"
-          + "%\n example: /issupportedversion <chrome> <1543>",
-          textInput: 2,
-      },
+      },      
       default: {
         string: "/help",
         function: self.getHelp,
@@ -92,13 +84,6 @@ export default class Command {
     .then(function(result) {
       bot.sendMessage(message.from, result);
     })
-  }
-
-  getIsSupportedVersion(bot, message) {
-    if (message.arrayText.length != 2) {
-      bot.sendMessage(message.from, 'Not enough text!');  
-    }
-    bot.sendMessage(message.from, 'Unimplemented function !');
   }
 
   getGreeting(bot, message) {
