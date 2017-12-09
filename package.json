@@ -11,7 +11,8 @@
   "dependencies": {
     "bluebird": "^3.5.1",
     "mongodb": "^2.2.33",
-    "node-telegram-bot-api": "^0.21.1"
+    "node-telegram-bot-api": "^0.21.1",
+	"nodemon": "^1.9.2"
   },
   "devDependencies": {
     "babel-core": "6.10.4",
