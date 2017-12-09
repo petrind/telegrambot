@@ -1,11 +1,12 @@
 var MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
 import Promise from "bluebird";
+import config from '../config';
 
 export default class AppVersion {
   
   constructor() {
-    this.url = "mongodb://localhost:27017/versionapp";
+    this.url = config.mongodb.url;
 
     MongoClient.connect(this.url, (err, db) => {
       if (err) throw err;      

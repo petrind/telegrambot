@@ -6,7 +6,7 @@ export default {
       host: '0.0.0.0'
     },
     mongodb: {
-      url: process.env.MONGODBURL || 'mongodb://localhost:27017/appversion',
+      url: process.env.MONGODBURL || 'mongodb://admin:admin123@ds155631.mlab.com:55631/heroku_hzldrvpc',
     }
   };
   
