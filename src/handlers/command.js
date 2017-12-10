@@ -75,10 +75,7 @@ export default class Command {
   
   //region function command
 
-  getSupportedVersion(bot, message) {
-    if (message.arrayText.length != 1) {
-      bot.sendMessage(message.from, 'Not enough text!');  
-    }
+  getSupportedVersion(bot, message) {    
     return Promise.try(function () {      
       return AppVersion.findApplication(message.arrayText[0]);
     })
