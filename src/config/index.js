@@ -1,7 +1,7 @@
 export default {
     telegram: {
-      token: process.env.TELEGRAM_TOKEN || '473931720:AAFhYh6h1dJUlVC0GmY_UkyiGpOrb72CDK8',
-      externalUrl: process.env.CUSTOM_ENV_VARIABLE || 'https://yoursite.com',
+      token: process.env.TELEGRAM_TOKEN || '492324683:AAHaSv4uJ5BPbBY_Byixuz2hfseSrQAQraM',
+      externalUrl: process.env.CUSTOM_ENV_VARIABLE || '',
       port: process.env.PORT || 443,
       host: '0.0.0.0'
     },
