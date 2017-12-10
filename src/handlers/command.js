@@ -77,7 +77,7 @@ export default class Command {
 
   getSupportedVersion(bot, message) {    
     return Promise.try(function () {      
-      return AppVersion.findApplication(message.arrayText[0]);
+      return AppVersion.findApplication(message.arrayText[1]);
     })
     .then(function(result) {
       bot.sendMessage(message.from, result);
